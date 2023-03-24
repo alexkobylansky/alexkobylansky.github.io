@@ -1,7 +1,7 @@
 [
   {
     "_id": 1,
-    "avatar": "/static/images/avatar/2.jpg",
+    "avatar": "/website-news-feed/static/images/avatar/2.jpg",
     "username": "admin",
     "password": "12345",
     "name": "Remy",
