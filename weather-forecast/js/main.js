@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     getCurrentWeather(lat, lon);
     getForecastWeather(lat, lon);
     getOneCallAPI(lat, lon);
-    loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBlRvR5o1Duvdlb2O7fp_OpPYIRginKYao&libraries=places&callback=initMap', initMap, lat, lon);
+    loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCgdm9KMc9rTuW6rrQzbgK9H58AfMXl8TY&libraries=places&callback=initMap', initMap, lat, lon);
     hidePreloader()
   }
 
