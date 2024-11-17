@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getOneCallAPI(lat, lon) {
-    const url = new URL("https://api.openweathermap.org/data/2.5/onecall");
+    const url = new URL("https://api.openweathermap.org/data/3.0/onecall");
     const params = {
       lat: lat,
       lon: lon,
