@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     getForecastWeather(lat, lon);
     getOneCallAPI(lat, lon);
     loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBlRvR5o1Duvdlb2O7fp_OpPYIRginKYao&libraries=places&callback=initMap', initMap, lat, lon);
-    hidePreloader()
+    // hidePreloader()
   }
 
   (function () {
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
       marker.setVisible(true);
       infoWindow.close();
       if (!place.geometry) {
-        hidePreloader();
+        // hidePreloader();
         alert('Error');
       } else {
         map.fitBounds(place.geometry.viewport)
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
           getForecastWeather(cityName.coord.lat, cityName.coord.lon);
           getOneCallAPI(cityName.coord.lat, cityName.coord.lon)
         });
-      hidePreloader();
+      // hidePreloader();
     }
   }
 
