@@ -86,14 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.append(script);
   }
 
-  function hidePreloader() {
+  /*function hidePreloader() {
     const spinner = document.querySelector('.preloader');
     const cont = document.querySelector('.container.hide');
     setTimeout(() => {
       spinner.classList.add('hide');
       if (cont) cont.classList.remove('hide');
     }, 1000);
-  }
+  }*/
 
   function showPreloader() {
     const spinner = document.querySelector('.preloader.hide');
