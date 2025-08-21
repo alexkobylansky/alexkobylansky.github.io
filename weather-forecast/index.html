@@ -27,20 +27,11 @@
 <div class="container hide">
 	<header>
 		<div class="row">
-			<div class="col-md-8">
+			<div class="col-md-5">
 				<h1>Просто о погоде</h1>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-7">
 				<div class="search" id="search">
-					<label for="autocomplete">
-						<input type="search" id="autocomplete" value="">
-					</label>
-					<span class="icon">
-          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-					  <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-					  <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-					</svg>
-      </span>
 				</div>
 			</div>
 		</div>
@@ -56,8 +47,8 @@
 		<div class="tab-pane fade show active" id="nav-today" role="tabpanel" aria-labelledby="nav-today-tab">
 			<section id="current-weather">
 				<div class="row">
-					<div class="col-md-3">
-						<h2>Сейчас</h2>
+					<div class="col-md-3 cityName">
+						<h2></h2>
 					</div>
 					<div class="col-md-3">
 						<span class="date"></span>
@@ -360,6 +351,7 @@
 		<div id="map"></div>
 	</section>
 </div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlRvR5o1Duvdlb2O7fp_OpPYIRginKYao&libraries=places&loading=async"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 </body>

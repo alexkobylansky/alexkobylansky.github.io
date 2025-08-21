@@ -75,22 +75,9 @@ h1 {
 	font-size: 2rem !important;
 	color: #1F9696;
 }
-.search {
-	position: relative;
-}
-.search input {
-	width: 100%;
-	padding: 5px 10px 5px 40px;
-}
-.search .icon {
-	position: absolute;
-	left: 20px;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-.search .icon svg {
-	position: relative;
-	top: -2px;
+header .col-md-7 {
+	display: flex;
+	justify-content: flex-end;
 }
 .date {
 	font-size: 1.5rem !important;
@@ -244,7 +231,7 @@ button.custom-map-control-button {
 	height: 100vh;
 	top: 0;
 	right: 0;
-	background-color: #FFFFFF;
+	background-color: #E6E6E6;
 	z-index: 999;
 }
 .hide {
