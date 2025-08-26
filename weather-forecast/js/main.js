@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const baseURL = 'https://api.openweathermap.org/data';
 
-  const showToast = (status, text) => {
+  const showError = (status, text) => {
     Toastify({
       text: `HTTP Error: status: ${status}, ${text}`,
       duration: 3000,
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).showToast();
   };
 
-  const showError = (text) => {
+  const showWarning = (text) => {
     Toastify({
       text: `${text}`,
       duration: 3000,
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gravity: 'top',
       position: 'center',
       style: {
-        background: '#ec6335',
+        background: '#FFB300',
         color: 'white',
       }
     }).showToast();
@@ -179,11 +179,11 @@ document.addEventListener('DOMContentLoaded', () => {
             marker.position = pos;
           },
           () => {
-            showError('Ошибка: В вашем браузере отключена геолокация');
+            showWarning('Ошибка: В вашем браузере отключена геолокация');
           }
         );
       } else {
-        showError('Ошибка: Ваш браузер не поддерживает службу геолокации');
+        showWarning('Ошибка: Ваш браузер не поддерживает службу геолокации');
       }
     });
 
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(url);
 
         if (!response.ok) {
-          showToast(response.status, response.statusText);
+          showError(response.status, response.statusText);
           throw new Error(`HTTP Error: ${response.status}, ${response.statusText}`);
         }
 
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(url);
 
       if (!response.ok) {
-        showToast(response.status, response.statusText);
+        showError(response.status, response.statusText);
         throw new Error(`HTTP Error: ${response.status}, ${response.statusText}`);
       }
 
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(url);
 
       if (!response.ok) {
-        showToast(response.status, response.statusText);
+        showError(response.status, response.statusText);
         throw new Error(`HTTP Error: ${response.status}, ${response.statusText}`);
       }
 
@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(url);
 
       if (!response.ok) {
-        showToast(response.status, response.statusText);
+        showError(response.status, response.statusText);
         throw new Error(`HTTP Error: ${response.status}, ${response.statusText}`);
       }
 
