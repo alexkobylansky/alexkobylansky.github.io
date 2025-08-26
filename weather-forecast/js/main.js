@@ -8,13 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
       lang: 'ru',
       appid: '2e3f0a4de66d0bcd26974266f439e301'
     };
-  }
+  };
 
   const baseURL = 'https://api.openweathermap.org/data';
 
   const showToast = (status, text) => {
     Toastify({
       text: `HTTP Error: status: ${status}, ${text}`,
+      duration: 3000,
+      close: true,
+      gravity: 'top',
+      position: 'center',
+      style: {
+        background: '#ec6335',
+        color: 'white',
+      }
+    }).showToast();
+  };
+
+  const showError = (text) => {
+    Toastify({
+      text: `${text}`,
       duration: 3000,
       close: true,
       gravity: 'top',
@@ -58,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   })();
 
-
   function timestampConversation(t) {
     const now = getDay(t * 1000);
     let hour = now.getHours();
@@ -86,9 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getDuration(sunrise, sunset) {
-    let sunRise = getDay(sunrise);
-    let sunSet = getDay(sunset);
-    let different = sunSet - sunRise;
+    const sunRise = getDay(sunrise);
+    const sunSet = getDay(sunset);
+    const different = sunSet - sunRise;
     let hours = Math.floor((different % 86400) / 3600)
     let minutes = Math.ceil(((different % 86400) % 3600) / 60);
     if (minutes === 60) minutes -= 1;
@@ -149,10 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       position: center
     });
 
-    const infoWindow = await new google.maps.InfoWindow({});
-
     const locationButton = document.createElement('button');
-
     locationButton.textContent = 'Ваше местоположение';
     locationButton.classList.add('custom-map-control-button');
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
@@ -169,21 +179,11 @@ document.addEventListener('DOMContentLoaded', () => {
             marker.position = pos;
           },
           () => {
-            handleLocationError(true, infoWindow, map.getCenter());
+            showError('Ошибка: В вашем браузере отключена геолокация');
           }
         );
       } else {
-        handleLocationError(false, infoWindow, map.getCenter());
-      }
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(
-          browserHasGeolocation
-            ? 'Ошибка: В вашем браузере отключена геолокация'
-            : 'Ошибка: Ваш браузер не поддерживает службу геолокации'
-        );
-        infoWindow.open(map);
+        showError('Ошибка: Ваш браузер не поддерживает службу геолокации');
       }
     });
 
@@ -225,8 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const currentWeather = await response.json();
-        const lat = currentWeather.coord.lat;
-        const lon = currentWeather.coord.lon;
+
         renderCurrentWeather(currentWeather);
         void getForecastWeather(lat, lon);
         void getOneCallAPI(lat, lon);
@@ -268,8 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     createIcon();
-    const block = document.querySelector('.cityName');
-    block.querySelector('h2').innerHTML = `${name} Сейчас`;
+    document.querySelector('.cityName h2').textContent = `${name} Сейчас`;
 
     document.getElementById('rightNow-weather').innerHTML = (`
           <div class='col-md-8 current-weather-wrapp row'>
@@ -319,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector(`section.day${i} .hourly-today-icon`).innerHTML = '<th></th>';
       document.querySelector(`section.day${i} .hourly-today-description`).innerHTML = '<th>Прогноз</th>';
       document.querySelector(`section.day${i} .hourly-today-temp`).innerHTML = '<th>Температура (&deg;C)</th>';
-      document.querySelector(`section.day${i} .hourly-today-feel`).innerHTML = '<th>Ощущается</th>';
+      document.querySelector(`section.day${i} .hourly-today-feel`).innerHTML = '<th>Ощущается (&deg;C)</th>';
       document.querySelector(`section.day${i} .hourly-today-wind`).innerHTML = '<th>Ветер (м/с)</th>';
       document.querySelector(`section.day${i} .hourly-today-degrees`).innerHTML = '<th>Направление</th>';
       document.querySelector(`section.day${i} .hourly-today-wind_gust`).innerHTML = '<th>Порывы (м/с)</th>';
@@ -330,16 +328,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let trunc = (t) => Math.trunc(t / 1000);
     const endToday = currentDate.setHours(23, 0, 0);
-    const startDay1 = trunc(endToday + 10800000);
-    const endDay1 = trunc(endToday + 86400000);
-    const startDay2 = trunc((endDay1 * 1000) + 10800000);
-    const endDay2 = trunc((endDay1 * 1000) + 86400000);
-    const startDay3 = trunc((endDay2 * 1000) + 10800000);
-    const endDay3 = trunc((endDay2 * 1000) + 86400000);
-    const startDay4 = trunc((endDay3 * 1000) + 10800000);
-    const endDay4 = trunc((endDay3 * 1000) + 86400000);
-    const startDay5 = trunc((endDay4 * 1000) + 10800000);
-    const endDay5 = trunc((endDay4 * 1000) + 86400000);
+    const MS_IN_DAY = 86400000; // 24 часа
+    const MS_IN_3_HOURS = 10800000; // 3 часа
+
+    const startDay1 = trunc(endToday + MS_IN_3_HOURS);
+    const endDay1 = trunc(endToday + MS_IN_DAY);
+    const startDay2 = trunc((endDay1 * 1000) + MS_IN_3_HOURS);
+    const endDay2 = trunc((endDay1 * 1000) + MS_IN_DAY);
+    const startDay3 = trunc((endDay2 * 1000) + MS_IN_3_HOURS);
+    const endDay3 = trunc((endDay2 * 1000) + MS_IN_DAY);
+    const startDay4 = trunc((endDay3 * 1000) + MS_IN_3_HOURS);
+    const endDay4 = trunc((endDay3 * 1000) + MS_IN_DAY);
+    const startDay5 = trunc((endDay4 * 1000) + MS_IN_3_HOURS);
+    const endDay5 = trunc((endDay4 * 1000) + MS_IN_DAY);
 
     for (let i = 0; i < list.length; i++) {
       if (list[i]['dt'] >= startDay1 && list[i]['dt'] <= endDay1) {
@@ -436,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.hourly .hourly-today-icon').innerHTML = '<th></th>';
     document.querySelector('.hourly .hourly-today-description').innerHTML = '<th>Прогноз</th>';
     document.querySelector('.hourly .hourly-today-temp').innerHTML = '<th>Температура (&deg;C)</th>';
-    document.querySelector('.hourly .hourly-today-feel').innerHTML = '<th>Ощущается</th>';
+    document.querySelector('.hourly .hourly-today-feel').innerHTML = '<th>Ощущается (&deg;C)</th>';
     document.querySelector('.hourly .hourly-today-wind').innerHTML = '<th>Ветер (м/с)</th>';
     document.querySelector('.hourly .hourly-today-degrees').innerHTML = '<th>Направление</th>';
     document.querySelector('.hourly .hourly-today-wind_gust').innerHTML = '<th>Порывы (м/с)</th>';
