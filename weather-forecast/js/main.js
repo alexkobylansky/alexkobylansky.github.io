@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams({
       latlng: `${lat},${lon}`,
       language: 'ru',
-      key: 'AIzaSyBP6TTt_WvIbUp5gx0n5niy6wyC175FUhs'
+      key: 'AIzaSyDqtcdYAEpylvK0z5gm0Hz9BZS5BGhMs88'
     });
     const url = `https://maps.googleapis.com/maps/api/geocode/json?${params}`;
 
