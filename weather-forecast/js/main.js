@@ -211,30 +211,56 @@ document.addEventListener('DOMContentLoaded', () => {
       const lon = place.location.lng();
       void getCity(lat, lon);
     });
+  }
 
-    async function getCity(lat, lon) {
-      const params = new URLSearchParams(createParams(lat, lon));
-      const url = `${baseURL}/2.5/weather?${params}`;
+  async function getCity(lat, lon) {
+    const params = new URLSearchParams(createParams(lat, lon));
+    const url = `${baseURL}/2.5/weather?${params}`;
 
-      try {
-        const response = await fetch(url);
+    try {
+      const response = await fetch(url);
 
-        if (!response.ok) {
-          showError(response.status, response.statusText);
-          throw new Error(`HTTP Error: ${response.status}, ${response.statusText}`);
-        }
-
-        const currentWeather = await response.json();
-
-        renderCurrentWeather(currentWeather);
-        void getForecastWeather(lat, lon);
-        void getOneCallAPI(lat, lon);
-      } catch (error) {
-        console.error('Fetch error:', error.message);
-        throw error;
-      } finally {
-        hidePreloader();
+      if (!response.ok) {
+        showError(response.status, response.statusText);
+        throw new Error(`HTTP Error: ${response.status}, ${response.statusText}`);
       }
+
+      const currentWeather = await response.json();
+
+      currentWeather.name = await getPlace(lat, lon);
+
+      renderCurrentWeather(currentWeather);
+      void getForecastWeather(lat, lon);
+      void getOneCallAPI(lat, lon);
+    } catch (error) {
+      console.error('Fetch error:', error.message);
+      throw error;
+    } finally {
+      hidePreloader();
+    }
+  }
+
+  async function getPlace(lat, lon) {
+    const params = new URLSearchParams({
+      latlng: `${lat},${lon}`,
+      language: 'ru',
+      key: 'AIzaSyBP6TTt_WvIbUp5gx0n5niy6wyC175FUhs'
+    });
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?${params}`;
+
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}, ${response.statusText}`);
+      }
+
+      const place = await response.json();
+
+      return place.results[0].address_components[2].long_name;
+    } catch (error) {
+      console.error('Fetch error:', error.message);
+      throw error;
     }
   }
 
