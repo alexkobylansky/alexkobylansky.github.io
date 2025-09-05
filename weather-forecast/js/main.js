@@ -277,6 +277,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const currentWeather = await response.json();
+
+      currentWeather.name = await getPlace(lat, lon);
+
       renderCurrentWeather(currentWeather);
     } catch (error) {
       console.error('Fetch error:', error.message);
